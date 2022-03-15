@@ -83,6 +83,10 @@ public class Vec3 {
         return random_in_unit_sphere().unit_vector();
     }
 
+    public static Vec3 random_in_hemisphere(Vec3 normal) {
+        Vec3 in_unit_sphere = random_in_unit_sphere();
+        return in_unit_sphere.dot(normal) > 0.0 ? in_unit_sphere : in_unit_sphere.minus();
+    }
 
     public String toString() {
         return String.format("%f %f %f", this.x, this.y, this.z);

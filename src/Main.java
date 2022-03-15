@@ -6,7 +6,7 @@ import util.Image;
 public class Main {
     // Image
     private static final double aspect_ratio = 16.0 / 9.0;
-    private static final int image_width = 1920 ;
+    private static final int image_width = 1280 /2 ;
     private static final int image_height = (int) (image_width / aspect_ratio);
     private static final int samples_per_pixel = 100;
     private static final int max_depth = 50;
@@ -63,8 +63,7 @@ public class Main {
 
         if (world.hit(r, 0.001, Double.POSITIVE_INFINITY, rec)) {
             Vec3 target = rec.getP()
-                    .add(rec.getNormal())
-                    .add(Vec3.random_in_unit_sphere());
+                    .add(Vec3.random_in_hemisphere(rec.getNormal()));
             //  0.5 * ray_color(ray(rec.p, target - rec.p), world);
             return ray_color(new Ray(rec.getP(), target.subtract(rec.getP())), world, depth - 1)
                     .scale(0.5);
