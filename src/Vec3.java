@@ -62,6 +62,16 @@ public class Vec3 {
         return this.divide(this.length());
     }
 
+    public boolean near_zero() {
+        double s = 1e-8;
+        return (Math.abs(x) < s) && (Math.abs(y) < s) && (Math.abs(z) < s);
+    }
+
+    public Vec3 reflect(/*Vec3 v, */Vec3 n) {
+        // v - 2*dot(v,n)*n
+        return this.subtract(n.scale(2*this.dot(n)));
+    }
+
     public static Vec3 random_vec3() {
         return new Vec3(Math.random(), Math.random(), Math.random());
     }

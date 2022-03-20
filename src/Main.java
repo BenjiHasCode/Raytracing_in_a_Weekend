@@ -11,6 +11,12 @@ public class Main {
     private static final int samples_per_pixel = 100;
     private static final int max_depth = 50;
 
+    // Material
+    private static final Material material_ground = new Lambertian(new Color(0.8, 0.8, 0.0));
+    private static final Material material_center = new Lambertian(new Color(0.7, 0.3, 0.3));
+    private static final Material material_left = new Metal(new Color(0.8, 0.8, 0.8));
+    private static final Material material_right = new Metal(new Color(0.8, 0.6, 0.2));
+
     // Setup frame
     private static final ImageFrame frame = new ImageFrame(image_width, image_height);
 
@@ -22,8 +28,11 @@ public class Main {
 
     public static void main(String[] args) {
         // Populate world
-        world.add(new Sphere(new Vec3(0, 0, -1), 0.5));
-        world.add(new Sphere(new Vec3(0, -100.5, -1), 100));
+        world.add(new Sphere(new Vec3(0, -100.5, -1), 100, material_ground));
+        world.add(new Sphere(new Vec3(0, 0, -1), 0.5, material_center));
+        world.add(new Sphere(new Vec3(-1, 0, -1), 0.5, material_left));
+        world.add(new Sphere(new Vec3(1, 0, -1), 0.5, material_right));
+
 
         Graphics g = frame.getImageComponent().getBufferedImage().getGraphics();
 
@@ -62,11 +71,11 @@ public class Main {
         }
 
         if (world.hit(r, 0.001, Double.POSITIVE_INFINITY, rec)) {
-            Vec3 target = rec.getP()
-                    .add(Vec3.random_in_hemisphere(rec.getNormal()));
-            //  0.5 * ray_color(ray(rec.p, target - rec.p), world);
-            return ray_color(new Ray(rec.getP(), target.subtract(rec.getP())), world, depth - 1)
-                    .scale(0.5);
+            Ray scattered = new Ray();
+            Color attenuation = new Color();
+            if (rec.getMaterial().scatter(r, rec, attenuation, scattered))
+                return attenuation.multiply(ray_color(scattered, world, depth-1));
+            return new Color(0, 0, 0);
         }
 
         Vec3 unit_direction = r.direction().unit_vector();

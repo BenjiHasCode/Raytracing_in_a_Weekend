@@ -1,12 +1,14 @@
 public class Hit_record {
     private Vec3 p;
     private Vec3 normal;
+    private Material material;
     private double t;
     private boolean front_face;
 
-    public Hit_record(Vec3 point, Vec3 normal, double t, boolean front_face) {
+    public Hit_record(Vec3 point, Vec3 normal, Material material, double t, boolean front_face) {
         this.p = point;
         this.normal = normal;
+        this.material = material;
         this.t = t;
         this.front_face = front_face;
     }
@@ -16,6 +18,14 @@ public class Hit_record {
         this.normal = new Vec3();
         this.t = 0;
         this.front_face = false;
+    }
+
+    public Hit_record(Hit_record rec) {
+        this.p = rec.getP();
+        this.normal = rec.getNormal();
+        this.material = rec.getMaterial();
+        this.t = rec.getT();
+        this.front_face = rec.isFront_face();
     }
 
     public void set_face_normal(Ray r, Vec3 outward_normal) {
@@ -37,6 +47,14 @@ public class Hit_record {
 
     public void setNormal(Vec3 normal) {
         this.normal = normal;
+    }
+
+    public Material getMaterial() {
+        return this.material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     public double getT() {

@@ -1,10 +1,12 @@
 public class Sphere implements Hittable {
     private final Vec3 center;
     private final double radius;
+    private Material material;
 
-    public Sphere(Vec3 center, double radius) {
+    public Sphere(Vec3 center, double radius, Material material) {
         this.center = center;
         this.radius = radius;
+        this.material = material;
     }
 
     public boolean hit(Ray ray, double t_min, double t_max, Hit_record rec) {
@@ -36,6 +38,7 @@ public class Sphere implements Hittable {
                 .divide(radius);
 
         rec.set_face_normal(ray, outward_normal);
+        rec.setMaterial(material);
         return true;
     }
 }

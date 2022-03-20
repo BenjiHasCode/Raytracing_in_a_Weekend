@@ -35,8 +35,11 @@ public class Hittable_list implements Hittable{
                 rec.setNormal(temp_rec.getNormal());
                 rec.setT(temp_rec.getT());
                 rec.setFront_face(temp_rec.isFront_face());
+                rec.setMaterial(temp_rec.getMaterial());
             }
         }
+
+
 
         return hit_anything;
     }
