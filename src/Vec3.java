@@ -15,6 +15,12 @@ public class Vec3 {
         this.z = z;
     }
 
+    public void clone(Vec3 v) {
+        this.x = v.x;
+        this.y = v.y;
+        this.z = v.z;
+    }
+
     public Vec3 minus() {
         return new Vec3(-this.x, -this.y, -this.z);
     }

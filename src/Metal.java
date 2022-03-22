@@ -1,5 +1,5 @@
 public class Metal implements Material {
-    private Color albedo;
+    private final Color albedo;
 
     public Metal(Color albedo) {
         this.albedo = albedo;
@@ -12,13 +12,8 @@ public class Metal implements Material {
                 .direction()
                 .unit_vector()
                 .reflect(rec.getNormal());
-        // scattered = new Ray(rec.getP(), reflected);
-        scattered.setOrigin(rec.getP());
-        scattered.setDirection(reflected);
-        // attenuation = albedo;
-        attenuation.setX(albedo.getX());
-        attenuation.setY(albedo.getY());
-        attenuation.setZ(albedo.getZ());
+        scattered.clone(new Ray(rec.getP(), reflected));
+        attenuation.clone(albedo);
         // return (dot(scattered.direction(), rec.normal) > 0);
         return (scattered.direction().dot(rec.getNormal()) > 0);
     }

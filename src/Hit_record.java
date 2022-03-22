@@ -20,17 +20,17 @@ public class Hit_record {
         this.front_face = false;
     }
 
-    public Hit_record(Hit_record rec) {
-        this.p = rec.getP();
-        this.normal = rec.getNormal();
-        this.material = rec.getMaterial();
-        this.t = rec.getT();
-        this.front_face = rec.isFront_face();
-    }
-
     public void set_face_normal(Ray r, Vec3 outward_normal) {
         this.front_face = r.direction().dot(outward_normal) < 0;
         this.normal = this.front_face ? outward_normal : outward_normal.minus();
+    }
+
+    public void clone(Hit_record rec) {
+        this.p = rec.p;
+        this.normal = rec.normal;
+        this.material = rec.material;
+        this.t = rec.t;
+        this.front_face = rec.front_face;
     }
 
     public Vec3 getP() {

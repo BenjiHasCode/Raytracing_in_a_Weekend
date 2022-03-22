@@ -1,5 +1,5 @@
 public class Lambertian implements Material{
-    private Color albedo;
+    private final Color albedo;
 
     public Lambertian(Color albedo) {
         this.albedo = albedo;
@@ -15,13 +15,8 @@ public class Lambertian implements Material{
             scatter_direction = rec.getNormal();
         }
 
-        // scattered = new Ray(rec.getP(), reflected);
-        scattered.setOrigin(rec.getP());
-        scattered.setDirection(scatter_direction);
-        // attenuation = albedo;
-        attenuation.setX(albedo.getX());
-        attenuation.setY(albedo.getY());
-        attenuation.setZ(albedo.getZ());
+        scattered.clone(new Ray(rec.getP(), scatter_direction));
+        attenuation.clone(albedo);
         return true;
     }
 }

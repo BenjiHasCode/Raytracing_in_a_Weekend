@@ -26,16 +26,11 @@ public class Hittable_list implements Hittable{
         boolean hit_anything = false;
         double closest_so_far = t_max;
 
-        for (int i = 0; i < this.objects.size(); i++) {
-            if (this.objects.get(i).hit(r, t_min, closest_so_far, temp_rec)) {
+        for (Hittable object : this.objects) {
+            if (object.hit(r, t_min, closest_so_far, temp_rec)) {
                 hit_anything = true;
                 closest_so_far = temp_rec.getT();
-               // rec = temp_rec;
-                rec.setP(temp_rec.getP());
-                rec.setNormal(temp_rec.getNormal());
-                rec.setT(temp_rec.getT());
-                rec.setFront_face(temp_rec.isFront_face());
-                rec.setMaterial(temp_rec.getMaterial());
+                rec.clone(temp_rec);
             }
         }
 

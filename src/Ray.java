@@ -12,6 +12,11 @@ public class Ray {
         this.dir = direction;
     }
 
+    public void clone(Ray r) {
+        this.orig = r.orig;
+        this.dir = r.dir;
+    }
+
     public Vec3 origin() { return this.orig; }
     public Vec3 direction() { return this.dir; }
     public void setOrigin(Vec3 origin) {
