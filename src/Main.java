@@ -14,8 +14,8 @@ public class Main {
     // Material
     private static final Material material_ground = new Lambertian(new Color(0.8, 0.8, 0.0));
     private static final Material material_center = new Lambertian(new Color(0.7, 0.3, 0.3));
-    private static final Material material_left = new Metal(new Color(0.8, 0.8, 0.8));
-    private static final Material material_right = new Metal(new Color(0.8, 0.6, 0.2));
+    private static final Material material_left = new Metal(new Color(0.8, 0.8, 0.8), 0.3);
+    private static final Material material_right = new Metal(new Color(0.8, 0.6, 0.2), 1.0);
 
     // Setup frame
     private static final ImageFrame frame = new ImageFrame(image_width, image_height);

@@ -1,8 +1,10 @@
 public class Metal implements Material {
-    private final Color albedo;
+    private Color albedo;
+    private double fuzz;
 
-    public Metal(Color albedo) {
+    public Metal(Color albedo, double f) {
         this.albedo = albedo;
+        this.fuzz = f < 1 ? f : 1;
     }
 
     @Override
