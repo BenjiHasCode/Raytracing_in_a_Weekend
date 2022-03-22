@@ -1,3 +1,5 @@
+import util.Random;
+
 public class Vec3 {
     private double x;
     private double y;
@@ -76,6 +78,16 @@ public class Vec3 {
     public Vec3 reflect(/*Vec3 v, */Vec3 n) {
         // v - 2*dot(v,n)*n
         return this.subtract(n.scale(2*this.dot(n)));
+    }
+
+    public Vec3 refract(Vec3 n, double etai_over_etat) {
+        double cos_theta = Math.min(-this.dot(n), 1.0);
+        Vec3 r_out_perp = this
+                .add(n.scale(cos_theta))
+                .scale(etai_over_etat);
+        Vec3 r_out_parallel = n.scale(-Math.sqrt(Math.abs(1.0 - r_out_perp.length_squared())));
+
+        return r_out_perp.add(r_out_parallel);
     }
 
     public static Vec3 random_vec3() {

@@ -6,16 +6,16 @@ import util.Image;
 public class Main {
     // Image
     private static final double aspect_ratio = 16.0 / 9.0;
-    private static final int image_width = 1280 / 2 ;
+    private static final int image_width = 1280;
     private static final int image_height = (int) (image_width / aspect_ratio);
     private static final int samples_per_pixel = 100;
     private static final int max_depth = 50;
 
     // Material
     private static final Material material_ground = new Lambertian(new Color(0.8, 0.8, 0.0));
-    private static final Material material_center = new Lambertian(new Color(0.7, 0.3, 0.3));
-    private static final Material material_left = new Metal(new Color(0.8, 0.8, 0.8), 0.3);
-    private static final Material material_right = new Metal(new Color(0.8, 0.6, 0.2), 1.0);
+    private static final Material material_center = new Lambertian(new Color(0.1, 0.2, 0.5));
+    private static final Material material_left = new Dielectric(1.5);
+    private static final Material material_right = new Metal(new Color(0.8, 0.6, 0.2), 0.0);
 
     // Setup frame
     private static final ImageFrame frame = new ImageFrame(image_width, image_height);
@@ -28,14 +28,13 @@ public class Main {
 
     public static void main(String[] args) {
         // Populate world
-        world.add(new Sphere(new Vec3(0, -100.5, -1), 100, material_ground));
-        world.add(new Sphere(new Vec3(0, 0, -1), 0.5, material_center));
-        world.add(new Sphere(new Vec3(-1, 0, -1), 0.5, material_left));
-        world.add(new Sphere(new Vec3(1, 0, -1), 0.5, material_right));
-
+        world.add(new Sphere(new Vec3(0.0, -100.5, -1.0), 100, material_ground));
+        world.add(new Sphere(new Vec3(0.0, 0.0, -1.0), 0.5, material_center));
+        world.add(new Sphere(new Vec3(-1.0, 0.0, -1.0), 0.5, material_left));
+        world.add(new Sphere(new Vec3(-1.0, 0.0, -1.0), -0.4, material_left));
+        world.add(new Sphere(new Vec3(1.0, 0.0, -1.0), 0.5, material_right));
 
         Graphics g = frame.getImageComponent().getBufferedImage().getGraphics();
-
         render(g);
     }
 
