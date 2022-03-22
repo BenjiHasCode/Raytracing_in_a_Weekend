@@ -6,7 +6,7 @@ import util.Image;
 public class Main {
     // Image
     private static final double aspect_ratio = 16.0 / 9.0;
-    private static final int image_width = 1280 /2 ;
+    private static final int image_width = 1280 / 2 ;
     private static final int image_height = (int) (image_width / aspect_ratio);
     private static final int samples_per_pixel = 100;
     private static final int max_depth = 50;

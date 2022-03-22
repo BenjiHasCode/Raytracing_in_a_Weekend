@@ -1,6 +1,6 @@
 public class Metal implements Material {
-    private Color albedo;
-    private double fuzz;
+    private final Color albedo;
+    private final double fuzz;
 
     public Metal(Color albedo, double f) {
         this.albedo = albedo;
@@ -14,7 +14,7 @@ public class Metal implements Material {
                 .direction()
                 .unit_vector()
                 .reflect(rec.getNormal());
-        scattered.clone(new Ray(rec.getP(), reflected));
+        scattered.clone(new Ray(rec.getP(), reflected.add(Vec3.random_in_unit_sphere().scale(fuzz))));
         attenuation.clone(albedo);
         // return (dot(scattered.direction(), rec.normal) > 0);
         return (scattered.direction().dot(rec.getNormal()) > 0);
