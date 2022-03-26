@@ -1,23 +1,28 @@
 package view;
 
 import javax.swing.*;
+import java.awt.image.BufferedImage;
 
 public class ImageFrame extends JFrame {
-    private final ImageComponent imageComponent;
-    public ImageFrame(int width, int height) {
-      //  setResizable(false);
-        setTitle("Raytracing");
+    private final ImagePanel panel;
+    public ImageFrame(int width, int height, BufferedImage image) {
         setSize(width, height);
-        setLocationRelativeTo(null); //Makes the window "spawn" in the middle of the screen
+        setResizable(false);
+        setTitle("Ray Tracing in a Weekend");
+        setLocationRelativeTo(null);
+        panel = new ImagePanel(width, height, image);
+        add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Create ImageComponent and add to ImageFrame
-        imageComponent = new ImageComponent(width, height);
-        add(imageComponent);
+        pack();
         setVisible(true);
     }
 
-    public ImageComponent getImageComponent(){
-        return imageComponent;
+    public void setRGB(int x, int y, double r, double g, double b) {
+        panel.setRGB(x, y, (int)r, (int)g, (int)b);
+    }
+
+    public BufferedImage getImage() {
+        return panel.getImage();
     }
 }

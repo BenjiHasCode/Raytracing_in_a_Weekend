@@ -19,12 +19,6 @@ public class Ray {
 
     public Vec3 origin() { return this.orig; }
     public Vec3 direction() { return this.dir; }
-    public void setOrigin(Vec3 origin) {
-        this.orig = origin;
-    }
-    public void setDirection(Vec3 direction) {
-        this.dir = direction;
-    }
 
     public Vec3 at(double t) {
         return this.orig.add(this.dir.scale(t));

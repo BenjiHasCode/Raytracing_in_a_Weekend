@@ -1,77 +1,50 @@
 public class Camera {
-    private double aspect_ratio;
-    private double viewport_height;
-    private double viewport_width;
-    private double focal_length;
     private Vec3 origin;
     private Vec3 horizontal;
     private Vec3 vertical;
     private Vec3 lower_left_corner;
+    private Vec3 u, v, w;
+    private double lens_radius;
 
-    public Camera() {
-        this.aspect_ratio = 16.0 / 9.0;
-        this.viewport_height = 2.0;
-        this.viewport_width = this.aspect_ratio * this.viewport_height;
-        this.focal_length = 1.0;
-        this.origin = new Vec3(0, 0, 0);
-        this.horizontal = new Vec3(this.viewport_width, 0.0, 0.0);
-        this.vertical = new Vec3(0.0, this.viewport_height, 0.0);
-        this.lower_left_corner = this.origin
-                .subtract(this.horizontal.divide(2))
-                .subtract(this.vertical.divide(2))
-                .subtract(new Vec3(0, 0, this.focal_length));
+    public Camera(
+            Vec3 lookFrom,
+            Vec3 lookAt,
+            Vec3 vup,
+            double vfov,
+            double aspect_ratio,
+            double aperture,
+            double focus_dist) {
+        double theta = Math.toRadians(vfov);
+        double h = Math.tan(theta/2);
+        double viewport_height = 2.0 * h;
+        double viewport_width = aspect_ratio * viewport_height;
 
+        this.w = lookFrom.subtract(lookAt).unit_vector();
+        this.u = vup.cross(w).unit_vector();
+        this.v = w.cross(u);
+
+        this.origin = lookFrom;
+        this.horizontal = u.scale(focus_dist * viewport_width);
+        this.vertical = v.scale(focus_dist * viewport_height);
+        this.lower_left_corner = origin
+                .subtract(horizontal.divide(2))
+                .subtract(vertical.divide(2))
+                .subtract(w.scale(focus_dist));
+
+        this.lens_radius = aperture / 2;
     }
 
-    public Camera(double aspect_ratio, double viewport_height, double viewport_width, double focal_length, Vec3 origin, Vec3 horizontal, Vec3 vertical, Vec3 lower_left_corner) {
-        this.aspect_ratio = aspect_ratio;
-        this.viewport_height = viewport_height;
-        this.viewport_width = viewport_width;
-        this.focal_length = focal_length;
-        this.origin = origin;
-        this.horizontal = horizontal;
-        this.vertical = vertical;
-        this.lower_left_corner = lower_left_corner;
-    }
+    public Ray get_ray(double s, double t) {
+        Vec3 rd = Vec3.random_in_unit_disk().scale(lens_radius);
+        Vec3 offset = u.scale(rd.getX())
+                .add(v.scale(rd.getY()));
 
-    public Ray get_ray(double u, double v) {
         Vec3 direction = lower_left_corner
-                .add(horizontal.scale(u))
-                .add(vertical.scale(v))
-                .subtract(origin);
-        return new Ray(this.origin, direction);
-    }
-
-    public double getAspect_ratio() {
-        return aspect_ratio;
-    }
-
-    public void setAspect_ratio(double aspect_ratio) {
-        this.aspect_ratio = aspect_ratio;
-    }
-
-    public double getViewport_height() {
-        return viewport_height;
-    }
-
-    public void setViewport_height(double viewport_height) {
-        this.viewport_height = viewport_height;
-    }
-
-    public double getViewport_width() {
-        return viewport_width;
-    }
-
-    public void setViewport_width(double viewport_width) {
-        this.viewport_width = viewport_width;
-    }
-
-    public double getFocal_length() {
-        return focal_length;
-    }
-
-    public void setFocal_length(double focal_length) {
-        this.focal_length = focal_length;
+                .add(horizontal.scale(s))
+                .add(vertical.scale(t))
+                .subtract(origin)
+                .subtract(offset);
+        return new Ray(this.origin.add(offset), direction);
     }
 
     public Vec3 getOrigin() {

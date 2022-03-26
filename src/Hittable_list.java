@@ -7,11 +7,6 @@ public class Hittable_list implements Hittable{
         this.objects = new ArrayList<>();
     }
 
-    public Hittable_list(Hittable hittable) {
-        this.objects = new ArrayList<>();
-        this.objects.add(hittable);
-    }
-
     public void clear() {
         this.objects.clear();
     }
@@ -33,8 +28,6 @@ public class Hittable_list implements Hittable{
                 rec.clone(temp_rec);
             }
         }
-
-
 
         return hit_anything;
     }

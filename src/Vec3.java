@@ -17,6 +17,12 @@ public class Vec3 {
         this.z = z;
     }
 
+    public Vec3(Vec3 v) {
+        this.x = v.x;
+        this.y = v.y;
+        this.z = v.z;
+    }
+
     public void clone(Vec3 v) {
         this.x = v.x;
         this.y = v.y;
@@ -90,17 +96,17 @@ public class Vec3 {
         return r_out_perp.add(r_out_parallel);
     }
 
-    public static Vec3 random_vec3() {
+    public static Vec3 random() {
         return new Vec3(Math.random(), Math.random(), Math.random());
     }
 
-    public static Vec3 random_vec3(double min, double max) {
+    public static Vec3 random(double min, double max) {
         return new Vec3(Random.getDouble(min, max), Random.getDouble(min, max), Random.getDouble(min, max));
     }
 
     public static Vec3 random_in_unit_sphere() {
         while (true) {
-            Vec3 p = random_vec3(-1, 1);
+            Vec3 p = random(-1, 1);
             if (!(p.length_squared() >= 1)) {
                 return p;
             }
@@ -114,6 +120,15 @@ public class Vec3 {
     public static Vec3 random_in_hemisphere(Vec3 normal) {
         Vec3 in_unit_sphere = random_in_unit_sphere();
         return in_unit_sphere.dot(normal) > 0.0 ? in_unit_sphere : in_unit_sphere.minus();
+    }
+
+    public static Vec3 random_in_unit_disk() {
+        while (true) {
+            Vec3 p = new Vec3(Random.getDouble(-1, 1), Random.getDouble(-1, 1), 0);
+
+            if (p.length_squared() < 1)
+                return p;
+        }
     }
 
     public String toString() {

@@ -9,14 +9,13 @@ public class Sphere implements Hittable {
         this.material = material;
     }
 
-    public boolean hit(Ray ray, double t_min, double t_max, Hit_record rec) {
-        Vec3 oc = ray.origin().subtract(this.center);
-        double a = ray.direction().length_squared();
-        double half_b = oc.dot(ray.direction());
+    public boolean hit(Ray r, double t_min, double t_max, Hit_record rec) {
+        Vec3 oc = r.origin().subtract(this.center);
+        double a = r.direction().length_squared();
+        double half_b = oc.dot(r.direction());
         double c = oc.length_squared() - this.radius*this.radius;
 
         double discriminant = half_b*half_b - a*c;
-
         if (discriminant < 0)
             return false;
 
@@ -32,11 +31,11 @@ public class Sphere implements Hittable {
         }
 
         rec.setT(root);
-        rec.setP(ray.at(rec.getT()));
+        rec.setP(r.at(rec.getT()));
         Vec3 outward_normal = rec.getP()
                 .subtract(center)
                 .divide(radius);
-        rec.set_face_normal(ray, outward_normal);
+        rec.set_face_normal(r, outward_normal);
         rec.setMaterial(material);
 
         return true;

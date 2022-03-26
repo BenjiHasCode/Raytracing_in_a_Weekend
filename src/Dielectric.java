@@ -1,7 +1,5 @@
-import util.Random;
-
 public class Dielectric implements Material {
-    private double ir; // Index of Refraction
+    private final double ir; // Index of Refraction
 
     public Dielectric(double index_of_refraction) {
         this.ir = index_of_refraction;
