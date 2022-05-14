@@ -1,9 +1,9 @@
 import util.Random;
 
 public class Vec3 {
-    private double x;
-    private double y;
-    private double z;
+    double x;
+    double y;
+    double z;
 
     public Vec3() {
         this.x = 0;
@@ -133,30 +133,5 @@ public class Vec3 {
 
     public String toString() {
         return String.format("%f %f %f", this.x, this.y, this.z);
-    }
-
-
-    public double getX() {
-        return x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public double getZ() {
-        return z;
-    }
-
-    public void setZ(double z) {
-        this.z = z;
     }
 }

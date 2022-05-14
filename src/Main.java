@@ -69,7 +69,7 @@ public class Main {
         }
 
         Vec3 unit_direction = r.direction().unit_vector();
-        double t = 0.5 * (unit_direction.getY() + 1.0);
+        double t = 0.5 * (unit_direction.y + 1.0);
         return new Color(1.0, 1.0, 1.0).scale(1.0-t)
                 .add(new Color(0.5, 0.7, 1.0).scale(t));
     }

@@ -36,8 +36,8 @@ public class Camera {
 
     public Ray get_ray(double s, double t) {
         Vec3 rd = Vec3.random_in_unit_disk().scale(lens_radius);
-        Vec3 offset = u.scale(rd.getX())
-                .add(v.scale(rd.getY()));
+        Vec3 offset = u.scale(rd.x)
+                .add(v.scale(rd.y));
 
         Vec3 direction = lower_left_corner
                 .add(horizontal.scale(s))
@@ -77,5 +77,37 @@ public class Camera {
 
     public void setLower_left_corner(Vec3 lower_left_corner) {
         this.lower_left_corner = lower_left_corner;
+    }
+
+    public Vec3 getU() {
+        return u;
+    }
+
+    public void setU(Vec3 u) {
+        this.u = u;
+    }
+
+    public Vec3 getV() {
+        return v;
+    }
+
+    public void setV(Vec3 v) {
+        this.v = v;
+    }
+
+    public Vec3 getW() {
+        return w;
+    }
+
+    public void setW(Vec3 w) {
+        this.w = w;
+    }
+
+    public double getLens_radius() {
+        return lens_radius;
+    }
+
+    public void setLens_radius(double lens_radius) {
+        this.lens_radius = lens_radius;
     }
 }
