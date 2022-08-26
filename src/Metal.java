@@ -12,7 +12,7 @@ public class Metal implements Material {
         Vec3 reflected = r_in.direction()
                 .unit_vector()
                 .reflect(rec.getNormal());
-        scattered.clone(new Ray(rec.getP(), reflected.add(Vec3.random_in_unit_sphere().scale(fuzz))));
+        scattered.clone(new Ray(rec.getP(), reflected.add(Vec3.random_in_unit_sphere().scale(fuzz)), r_in.time()));
         attenuation.clone(albedo);
 
         return (scattered.direction().dot(rec.getNormal()) > 0);

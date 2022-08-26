@@ -1,3 +1,5 @@
+import util.Random;
+
 public class Camera {
     private Vec3 origin;
     private Vec3 horizontal;
@@ -5,6 +7,7 @@ public class Camera {
     private Vec3 lower_left_corner;
     private Vec3 u, v, w;
     private double lens_radius;
+    private double time0, time1; // shutter open/close times
 
     public Camera(
             Vec3 lookFrom,
@@ -13,7 +16,9 @@ public class Camera {
             double vfov,
             double aspect_ratio,
             double aperture,
-            double focus_dist) {
+            double focus_dist,
+            double _time0,
+            double _time1) {
         double theta = Math.toRadians(vfov);
         double h = Math.tan(theta/2);
         double viewport_height = 2.0 * h;
@@ -32,6 +37,8 @@ public class Camera {
                 .subtract(w.scale(focus_dist));
 
         this.lens_radius = aperture / 2;
+        this.time0 = _time0;
+        this.time1 = _time1;
     }
 
     public Ray get_ray(double s, double t) {
@@ -44,7 +51,7 @@ public class Camera {
                 .add(vertical.scale(t))
                 .subtract(origin)
                 .subtract(offset);
-        return new Ray(this.origin.add(offset), direction);
+        return new Ray(this.origin.add(offset), direction, Random.getDouble(time0, time1));
     }
 
     public Vec3 getOrigin() {

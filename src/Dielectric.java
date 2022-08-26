@@ -22,7 +22,7 @@ public class Dielectric implements Material {
         else
             direction = unit_direction.refract(rec.getNormal(), refraction_ratio);
 
-        scattered.clone(new Ray(rec.getP(), direction));
+        scattered.clone(new Ray(rec.getP(), direction, r_in.time()));
         return true;
     }
 

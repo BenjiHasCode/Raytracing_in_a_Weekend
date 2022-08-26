@@ -14,7 +14,7 @@ public class Lambertian implements Material{
             scatter_direction = rec.getNormal();
         }
 
-        scattered.clone(new Ray(rec.getP(), scatter_direction));
+        scattered.clone(new Ray(rec.getP(), scatter_direction, r_in.time()));
         attenuation.clone(albedo);
         return true;
     }

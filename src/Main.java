@@ -9,9 +9,9 @@ public class Main {
     public static void main(String[] args) {
         // Image
         double aspect_ratio = 16.0 / 9.0;
-        int image_width = 1200;
+        int image_width = 400;
         int image_height = (int) (image_width / aspect_ratio);
-        int samples_per_pixel = 30;
+        int samples_per_pixel = 100;
         int max_depth = 50;
 
         // Setup frame
@@ -26,7 +26,7 @@ public class Main {
         Vec3 vup = new Vec3(0,1,0);
         double dist_to_focus = 10;
         double aperture = 0.1;
-        Camera cam = new Camera(lookFrom, lookAt, vup, 20, aspect_ratio, aperture, dist_to_focus);
+        Camera cam = new Camera(lookFrom, lookAt, vup, 20, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
 
         render(image_width, image_height, samples_per_pixel, max_depth, world, cam, frame);
     }
@@ -92,7 +92,8 @@ public class Main {
                         // diffuse
                         Vec3 albedo = Vec3.random().multiply(Vec3.random());
                         sphere_material = new Lambertian(new Color(albedo));
-                        world.add(new Sphere(center, 0.2, sphere_material));
+                        Vec3 center2 = center.add(new Vec3(0, Random.getDouble(0, .5), 0));
+                        world.add(new Moving_Sphere(center, center2, 0.0, 1.0, 0.2, sphere_material));
                     } else if (choose_mat < 0.95) {
                         // metal
                         Vec3 albedo = Vec3.random(0.5, 1);
