@@ -11,7 +11,7 @@ public class Ray {
     public Ray(Vec3 origin, Vec3 direction, double time) {
         this.orig = origin;
         this.dir = direction;
-        this.time = 0.0;
+        this.time = time;//0.0;
     }
 
     public void clone(Ray r) {
